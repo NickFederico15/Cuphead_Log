@@ -128,11 +128,11 @@
       const userForm = document.querySelector('#userForm');
       
       // create handlers
-      const addUser = (e) => sendPost(e, playerForm);
+      const addLog = (e) => sendPost(e, playerForm);
       const getResponses = (e) => requestUpdate(e, userForm);
       
       // attach submit events (for clicking submit or hitting enter)
-      playerForm.addEventListener('submit', addUser);
+      playerForm.addEventListener('submit', addLog);
       userForm.addEventListener('submit', getResponses);
     };
     window.onload = init;
@@ -141,8 +141,8 @@
 </head>
 <body>
   <section id="top">
-    <h3>Cuphead Log Book</h3>
-    <form id="playerForm" action="/addUser" method="post">
+    <h1>Cuphead Log Book</h1>
+    <form id="playerForm" action="/addLog" method="post">
       <label for="playerName">Player Name: </label>
       <input id="playerNameField" type="text" name="name" />
       <label for="bossName">Boss: </label>
@@ -154,7 +154,7 @@
         <option value='Captain Brineybeard'>Captain Brineybeard</option>
         <option value='The Devil'>The Devil</option>
         <option value='Djimmy The Great'>Djimmy The Great</option>
-        <option value='Dr. Kahl's Robot'>Dr. Kahl's Robot</option>
+        <option value='Dr. Kahls Robot'>Dr. Kahl's Robot</option>
         <option value='Goopy Le Grande'>Goopy Le Grande</option>
         <option value='Grim Matchstick'>Grim Matchstick</option>
         <option value='Hilda Berg'>Hilda Berg</option>  
@@ -173,9 +173,9 @@
       <input id="stratField" type="text" id="stratElement" placeholer="Explain Your Strategy Here"/>
       <input type="submit" value="Add Log" />
     </form>
-    <form id="userForm" action="/getUsers" method="get">
+    <form id="userForm" action="/getLogs" method="get">
       <select id='urlField'>
-        <option value='/getUsers'>/getUsers</option>
+        <option value='/getLogs'>/getLogs</option>
         <option value='/notReal'>/notReal</option>
       </select>
       <select id="methodSelect">

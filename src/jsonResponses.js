@@ -15,7 +15,7 @@ const respondJSONMeta = (request, response, status) => {
   response.end();
 };
 
-const getUsers = (request, response) => {
+const getLogs = (request, response) => {
   if (request.method === 'GET') {
     const responseJSON = {
       users,
@@ -27,7 +27,7 @@ const getUsers = (request, response) => {
   }
 };
 
-const addUser = (request, response, body) => {
+const addLog = (request, response, body) => {
   const responseJSON = {
     message: 'All fields are required',
   };
@@ -72,7 +72,7 @@ const notReal = (request, response) => {
 };
 
 module.exports = {
-  getUsers,
-  addUser,
+  getLogs,
+  addLog,
   notReal,
 };
