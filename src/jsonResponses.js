@@ -29,10 +29,10 @@ const getUsers = (request, response) => {
 
 const addUser = (request, response, body) => {
   const responseJSON = {
-    message: 'Name and age are both required',
+    message: 'All fields are required',
   };
 
-  if (!body.name || !body.age) {
+  if (!body.name || !body.boss || !body.deaths || !body.strategy) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
@@ -46,7 +46,9 @@ const addUser = (request, response, body) => {
   }
 
   users[body.name].name = body.name;
-  users[body.name].age = body.age;
+  users[body.name].boss = body.boss;
+  users[body.name].deaths = body.deaths;
+  users[body.name].strategy = body.strategy;
 
   if (responseCode === 201) {
     responseJSON.message = 'Created Successfully';
