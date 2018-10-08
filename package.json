@@ -1,5 +1,5 @@
 {
-  "name": "http-api-assignment-ii",
+  "name": "cuphead_log",
   "version": "1.0.0",
   "engines": {
     "node": "8.10.0",
@@ -26,5 +26,9 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "materialize-css": "^0.100.2",
+    "querystring": "^0.2.0"
   }
 }

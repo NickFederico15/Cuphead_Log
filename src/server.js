@@ -49,6 +49,10 @@ const handleGet = (request, response, parsedUrl) => {
     htmlHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getLogs') {
     jsonHandler.getLogs(request, response);
+  } else if (parsedUrl.pathname === '/materialize.min.css') {
+    htmlHandler.getMaterializeCSS(request, response);
+  } else if (parsedUrl.pathname === '/materialize.min.js') {
+    htmlHandler.getMaterializeJS(request, response);
   } else {
     jsonHandler.notReal(request, response);
   }
