@@ -31,15 +31,6 @@ const handlePost = (request, response, parsedUrl) => {
   }
 };
 
-const handleHead = (request, response, parsedUrl) => {
-  // route to correct method based on url
-  if (parsedUrl.pathname === '/getLogs') {
-    jsonHandler.getLogs(request, response);
-  } else if (parsedUrl.pathname === '/notReal') {
-    jsonHandler.notReal(request, response);
-  }
-};
-
 // handle GET requests
 const handleGet = (request, response, parsedUrl) => {
   // route to correct method based on url
@@ -54,6 +45,15 @@ const handleGet = (request, response, parsedUrl) => {
   } else if (parsedUrl.pathname === '/materialize.min.js') {
     htmlHandler.getMaterializeJS(request, response);
   } else {
+    htmlHandler.getIndex(request, response);
+  }
+};
+
+const handleHead = (request, response, parsedUrl) => {
+  // route to correct method based on url
+  if (parsedUrl.pathname === '/getLogs') {
+    jsonHandler.getLogs(request, response);
+  } else if (parsedUrl.pathname === '/notReal') {
     jsonHandler.notReal(request, response);
   }
 };
@@ -65,8 +65,6 @@ const onRequest = (request, response) => {
   // check if method was POST, HEAD or GET
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);
-  } else if (request.method === 'HEAD') {
-    handleHead(request, response, parsedUrl);
   } else {
     handleGet(request, response, parsedUrl);
   }

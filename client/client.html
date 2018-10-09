@@ -9,50 +9,78 @@
   <script type="text/javascript" src="/materialize.min.js"></script>
   <script type="text/babel">
     // function to parse our response
-    const parseJSON = (xhr, content) => {
+    var parseJSON = (xhr, content) => {
       // parse response
-      const obj = JSON.parse(xhr.response);
+      var obj = JSON.parse(xhr.response);
       console.dir(obj);
       
       // if message in response, add to screen
-      if(obj.message) {
-        const p = document.createElement('p');
-        p.textContent = `Message: ${obj.message}`;
-        content.appendChild(p);
-      }
-      
-      // if users in response, add to screen
-      if(obj.users) {
-        const userList = document.createElement('p');
-        const users = JSON.stringify(obj.users);
-        userList.textContent = users;
-        content.appendChild(userList);
+      if(obj.deathLogs && xhr.status == 200) {
+          // clear out all the elements in the cards div
+          while (content.firstChild) {
+            content.removeChild(content.firstChild);
+          }
+          
+          // Create a card for each game log
+          for (var x = 0; x < Object.keys(obj.deathLogs).length; x++) {
+              
+              // Creates a new row
+              var row = document.createElement('div');
+              row.className = "row";
+              content.appendChild(row);
+
+              // Creates a container for the card
+              var cardContainer = document.createElement('div');
+              cardContainer.className = "col s12 m6";
+              row.appendChild(cardContainer);
+
+              // Creates the card
+              var card = document.createElement('div');
+              card.className = "card grey darken-2";
+              cardContainer.appendChild(card);
+
+              // Creates the card content
+              var cardContent = document.createElement('div');
+              cardContent.className = "card-content white-text";
+              card.appendChild(cardContent);
+
+              // Creates the card title
+              var cardTitle = document.createElement('span');
+              cardTitle.className = "card-title";
+              cardTitle.textContent = "Player Name: " + obj.deathLogs["logNumber" + (x + 1)].name;
+              cardContent.appendChild(cardTitle);
+
+              // Creates the card paragraph
+              var cardParagraph = document.createElement('p');
+              cardParagraph.textContent = "Boss: " + obj.deathLogs["logNumber" + (x + 1)].boss + "\nDeaths: " + obj.deathLogs["logNumber" + (x + 1)].deaths + "\nStrategy: " + obj.deathLogs["logNumber" + (x + 1)].strategy;
+              cardContent.appendChild(cardParagraph);
+          }
       }
     };
 
     // function to handle response
     const handleResponse = (xhr) => {
-      const content = document.querySelector('#cards');
+      var content = document.querySelector('#cards');
       
       // checks the status code
       switch(xhr.status) {
         case 200:
-          Materialize.toast("Success!", 4000);
+          M.toast({html: "Success!"}, 4000);
           break;
         case 201:
-          Materialize.toast("Created!", 4000);
+          M.toast({html:"Created!"}, 4000);
           break;
         case 204:
-          Materialize.toast("Updated!", 4000);
+          M.toast({html:"Updated!"}, 4000);
           return;
         case 400:
-          Materialize.toast("Bad Request!", 4000);
+          M.toast({html:"Bad Request!"}, 4000);
           break;
         case 404:
-          Materialize.toast("Not Found!", 4000);
+          M.toast({html:"Not Found!"}, 4000);
           break;
         default:
-          Materialize.toast("Error Code Not Implemented by Client!", 4000);
+          M.toast({html:"Error Code Not Implemented by Client!"}, 4000);
           break;
       }
         
@@ -99,10 +127,10 @@
     };
 
     // function to send request
-    const requestUpdate = (e, getDeathLogsButton) => {
+    var requestUpdate = (e, getDeathLogsButton) => {
       // Gets action and method
-      var buttonAction = getLogsButton.getAttribute('action');
-      var buttonMethod = getLogsButton.getAttribute('method');
+      var buttonAction = getDeathLogsButton.getAttribute('action');
+      var buttonMethod = getDeathLogsButton.getAttribute('method');
 
       // Creates and sends proper get request
       var xhr = new XMLHttpRequest();
@@ -128,14 +156,14 @@
       const getDeathLogsButton = document.querySelector('#loadLogs');
       
       // create handlers
-      const addLog = (e) => sendPost(e, playerForm);
-      const showDeathLogs = (e) => requestUpdate(e, getDeathLogsButton);
+      var addLog = (e) => sendPost(e, playerForm);
+      var showDeathLogs = (e) => requestUpdate(e, getDeathLogsButton);
       
       // attach submit events (for clicking submit or hitting enter)
       playerForm.addEventListener('submit', addLog);
-      getDeathLogsButton.addEventListener('submit', showDeathLogs);
+      getDeathLogsButton.onclick = showDeathLogs;
         
-      // Initialization necessary for materialize select functionality
+      // Initialization necessary for materialize select
       $(document).ready(function () {
         $('select').formSelect();
       });
@@ -187,13 +215,13 @@
             <div class="row">
                 <div class="input-field col s6">
                     <input id="deathField" type="number" name="deaths" min="0" max="100000" step="1"/>
-                    <label for="deaths">Number of Deaths: </label>
+                    <label for="deaths">Number of Deaths</label>
                 </div>
             </div>
             <div class=row>
                 <div class="input-field col s12">
                     <input id="stratField" type="text" id="stratElement" placeholer="Explain Your Strategy Here"/>
-                    <label for="strategy">Strategy to Win: </label>
+                    <label for="strategy">Strategy to Win</label>
                 </div>
             </div>
             <div class="row center-align">
@@ -207,7 +235,7 @@
         <div id="cards">
         </div>
         <div class="row center-align">
-            <button class="waves-effect waves-light btn red accent-4" id="loadLogs" method="get" action="/getGameLog">Get Game Logs</button>
+            <button class="waves-effect waves-light btn red accent-4" id="loadLogs" method="get" action="/getLogs">Get Death Logs</button>
         </div>  
     </section>
   </div>
