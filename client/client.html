@@ -31,34 +31,33 @@
     };
 
     // function to handle response
-    const handleResponse = (xhr, parseResponse) => {
-      const content = document.querySelector('#content');
+    const handleResponse = (xhr) => {
+      const content = document.querySelector('#cards');
       
       // checks the status code
       switch(xhr.status) {
         case 200:
-          content.innerHTML = `<b>Success</b>`;
+          Materialize.toast("Success!", 4000);
           break;
         case 201:
-          content.innerHTML = '<b>Create</b>';
+          Materialize.toast("Created!", 4000);
           break;
         case 204:
-          content.innerHTML = '<b>Updated (No Content)</b>';
+          Materialize.toast("Updated!", 4000);
           return;
         case 400:
-          content.innerHTML = `<b>Bad Request</b>`;
+          Materialize.toast("Bad Request!", 4000);
           break;
         case 404:
-          content.innerHTML = `<b>Resource Not Found</b>`;
+          Materialize.toast("Not Found!", 4000);
           break;
         default:
-          content.innerHTML = `Error code not implemented by client.`;
+          Materialize.toast("Error Code Not Implemented by Client!", 4000);
           break;
       }
+        
       // parse response 
-      if (parseResponse) {
-        parseJSON(xhr, content);
-      }
+      parseJSON(xhr, content);
     };
 
     // function to send our post request
