@@ -65,6 +65,8 @@ const onRequest = (request, response) => {
   // check if method was POST, HEAD or GET
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);
+  } else if (request.method === 'HEAD') {
+    handleHead(request, response, parsedUrl);
   } else {
     handleGet(request, response, parsedUrl);
   }
