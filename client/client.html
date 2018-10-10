@@ -31,13 +31,19 @@
 
               // Creates a container for the card
               var cardContainer = document.createElement('div');
-              cardContainer.className = "col s12 m6";
+              cardContainer.className = "col s12 m12";
               row.appendChild(cardContainer);
 
               // Creates the card
-              var card = document.createElement('div');
-              card.className = "card grey darken-2";
-              cardContainer.appendChild(card);
+              if(x % 2){
+                  var card = document.createElement('div');
+                  card.className = "card red lighten-2";
+                  cardContainer.appendChild(card);
+              } else {
+                  var card = document.createElement('div');
+                  card.className = "card blue lighten-2";
+                  cardContainer.appendChild(card);
+              }
 
               // Creates the card content
               var cardContent = document.createElement('div');
@@ -47,13 +53,23 @@
               // Creates the card title
               var cardTitle = document.createElement('span');
               cardTitle.className = "card-title";
-              cardTitle.textContent = "Player Name: " + obj.deathLogs["logNumber" + (x + 1)].name;
+              cardTitle.textContent = obj.deathLogs["logNumber" + (x + 1)].name;
               cardContent.appendChild(cardTitle);
 
-              // Creates the card paragraph
-              var cardParagraph = document.createElement('p');
-              cardParagraph.textContent = "Boss: " + obj.deathLogs["logNumber" + (x + 1)].boss + "\nDeaths: " + obj.deathLogs["logNumber" + (x + 1)].deaths + "\nStrategy: " + obj.deathLogs["logNumber" + (x + 1)].strategy;
-              cardContent.appendChild(cardParagraph);
+              // Creates the card boss
+              var cardBoss = document.createElement('p');
+              cardBoss.textContent = "Boss: " + obj.deathLogs["logNumber" + (x + 1)].boss;
+              cardContent.appendChild(cardBoss);
+              
+              // Creates the card deaths
+              var cardDeath = document.createElement('p');
+              cardDeath.textContent = "Deaths: " + obj.deathLogs["logNumber" + (x + 1)].deaths;
+              cardContent.appendChild(cardDeath);
+              
+              // Creates the card strategy
+              var cardStrat = document.createElement('p');
+              cardStrat.textContent = "Strategy: " + obj.deathLogs["logNumber" + (x + 1)].strategy
+              cardContent.appendChild(cardStrat);
           }
       }
     };
@@ -163,7 +179,7 @@
       playerForm.addEventListener('submit', addLog);
       getDeathLogsButton.onclick = showDeathLogs;
         
-      // Initialization necessary for materialize select
+      // Initialization for materialize select
       $(document).ready(function () {
         $('select').formSelect();
       });
@@ -174,19 +190,19 @@
 </head>
 <body>
   <div class="container">
-    <h1>Cuphead Log Book</h1>
+    <h1><b>Cuphead Logs</b></h1>
     <div class="divider"></div>
     <section id="top">
-        <h3>Create a Death Log</h3>
+        <h4>Create a Death Log</h4>
         <form class="cols12" id="playerForm" action="/addLog" method="post">
             <div class="row">
-                <div class="input-field col s12">
-                    <input id="playerNameField" type="text" name="name" />
-                    <label for="playerName">Player Name</label>
+                <div class="input-field col s6">
+                    <input id="playerNameField" type="text" name="name">
+                    <label for="playerNameField">Player Name</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s4">
                     <select id="bossField">
                         <option disabled selected>Choose Boss</option>
                         <option value='Baroness Von Bon Bon'>Baroness Von Bon Bon</option>
@@ -209,33 +225,33 @@
                         <option value='Wally Warbles'>Wally Warbles</option>
                         <option value='Werner Werman'>Werner Werman</option>
                     </select>
-                    <label for="bossName">Boss</label>
+                    <label for="bossField">Boss</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
-                    <input id="deathField" type="number" name="deaths" min="0" max="100000" step="1"/>
-                    <label for="deaths">Number of Deaths</label>
+                <div class="input-field col s3">
+                    <input id="deathField" type="number" name="deaths" min="0" max="100000" step="1">
+                    <label for="deathField">Number of Deaths</label>
                 </div>
             </div>
             <div class=row>
                 <div class="input-field col s12">
-                    <input id="stratField" type="text" id="stratElement" placeholer="Explain Your Strategy Here"/>
-                    <label for="strategy">Strategy to Win</label>
+                    <input id="stratField" type="text" id="stratElement">
+                    <label for="stratField">Strategy to Win</label>
                 </div>
             </div>
-            <div class="row center-align">
-                <button class="waves-effect waves-light btn" type="submit" value="Add Log">Create Log</button>
+            <div class="row">
+                <button class="waves-effect waves-light red lighten-2 btn" type="submit" value="Add Log">Create Log</button>
             </div>
         </form>
     </section>
     <div class="divider"></div>
     <section id="getSection">
-        <h3>Death Logs</h3>
+        <h4>Death Logs</h4>
         <div id="cards">
         </div>
-        <div class="row center-align">
-            <button class="waves-effect waves-light btn red accent-4" id="loadLogs" method="get" action="/getLogs">Get Death Logs</button>
+        <div class="row">
+            <button class="waves-effect waves-light blue lighten-2 btn" id="loadLogs" method="get" action="/getLogs">Refresh Logs</button>
         </div>  
     </section>
   </div>
