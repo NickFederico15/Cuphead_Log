@@ -4,6 +4,7 @@
 // We will be working with databases in the next few weeks.
 const deathLogs = {};
 
+// index for logs
 let logNum = 1;
 
 const respondJSON = (request, response, status, object) => {
@@ -12,6 +13,7 @@ const respondJSON = (request, response, status, object) => {
   response.end();
 };
 
+// returns the logs
 const getLogs = (request, response) => {
   const responseJSON = {
     deathLogs,
@@ -20,11 +22,13 @@ const getLogs = (request, response) => {
   respondJSON(request, response, 200, responseJSON);
 };
 
+// creates a new log
 const addLog = (request, response, body) => {
   const responseJSON = {
     message: 'All fields are required',
   };
 
+  // checks if any of the fields are empty
   if (!body.name || !body.boss || !body.deaths || !body.strategy) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);

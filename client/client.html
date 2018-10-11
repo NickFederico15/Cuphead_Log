@@ -21,20 +21,18 @@
             content.removeChild(content.firstChild);
           }
           
-          // Create a card for each game log
+          // creates a Materialize card for each log
           for (var x = 0; x < Object.keys(obj.deathLogs).length; x++) {
               
-              // Creates a new row
               var row = document.createElement('div');
               row.className = "row";
               content.appendChild(row);
 
-              // Creates a container for the card
               var cardContainer = document.createElement('div');
               cardContainer.className = "col s12 m12";
               row.appendChild(cardContainer);
 
-              // Creates the card
+              // creates the card (blue or red)
               if(x % 2){
                   var card = document.createElement('div');
                   card.className = "card red lighten-2";
@@ -45,28 +43,27 @@
                   cardContainer.appendChild(card);
               }
 
-              // Creates the card content
               var cardContent = document.createElement('div');
               cardContent.className = "card-content white-text";
               card.appendChild(cardContent);
 
-              // Creates the card title
+              // card title
               var cardTitle = document.createElement('span');
               cardTitle.className = "card-title";
               cardTitle.textContent = obj.deathLogs["logNumber" + (x + 1)].name;
               cardContent.appendChild(cardTitle);
 
-              // Creates the card boss
+              // card boss
               var cardBoss = document.createElement('p');
               cardBoss.textContent = "Boss: " + obj.deathLogs["logNumber" + (x + 1)].boss;
               cardContent.appendChild(cardBoss);
               
-              // Creates the card deaths
+              // card deaths
               var cardDeath = document.createElement('p');
               cardDeath.textContent = "Deaths: " + obj.deathLogs["logNumber" + (x + 1)].deaths;
               cardContent.appendChild(cardDeath);
               
-              // Creates the card strategy
+              // card strategy
               var cardStrat = document.createElement('p');
               cardStrat.textContent = "Strategy: " + obj.deathLogs["logNumber" + (x + 1)].strategy
               cardContent.appendChild(cardStrat);
@@ -144,11 +141,11 @@
 
     // function to send request
     var requestUpdate = (e, getDeathLogsButton) => {
-      // Gets action and method
+      // gets action and method
       var buttonAction = getDeathLogsButton.getAttribute('action');
       var buttonMethod = getDeathLogsButton.getAttribute('method');
 
-      // Creates and sends proper get request
+      // creates and sends proper get request
       var xhr = new XMLHttpRequest();
       xhr.open(buttonMethod, buttonAction);
       xhr.setRequestHeader('Accept', 'application/json');
@@ -179,7 +176,7 @@
       playerForm.addEventListener('submit', addLog);
       getDeathLogsButton.onclick = showDeathLogs;
         
-      // Initialization for materialize select
+      // initialization for materialize select
       $(document).ready(function () {
         $('select').formSelect();
       });
